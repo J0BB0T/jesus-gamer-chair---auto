@@ -30,7 +30,7 @@
 
     var running = false;
     setInterval(() => {
-        var equation = document.getElementsByClassName("notranslate h-full noselect current")[0];
+        var equation = document.getElementsByClassName("notranslate height-100 noselect current")[0];
         var input = document.getElementsByClassName("input-holder width-100")[0];
         if (input == undefined || input == null) {
             input = document.getElementsByClassName("input-holder width-100 hint")[0];
@@ -60,10 +60,13 @@
             var id = setInterval(() => {
                 if (running) {
                     let raw = equation.innerHTML.replace("×", "*").replace("÷", "/");
+                    console.log(raw);
                     while (raw.includes("<!---->")) {
                         raw = raw.replace("<!---->", "");
                     }
+                    raw = raw.replace(/<\s*span[^>]*>.*?<\s*\/\s*span\s*>/g, ''); // i'm fairly sure this is the ttrockstar's developers trying to combat the exploit
                     raw = raw.trim();
+                    console.log(raw);
                     let answer = String(eval(raw));
                     GM_log("answer: " + answer);
 
@@ -88,17 +91,13 @@
                 } else {
                     clearInterval(id);
                 }
-            }, 224);
+            }, 225);
         } else {
             running = false;
-            play = document.getElementsByClassName("mat-focus-indicator margin-5 play-button stamp mat-raised-button mat-button-base mat-accent ng-star-inserted")[0];
-            if (play != undefined) {
-                play.click();
-            }
             var gameOver = document.getElementsByClassName("stamp center mat-white-color")[0];
             if (gameOver != undefined) {
-                gameOver.innerHTML = "WOW, YOU MIGHT BE SMARTER THAN ME! - Baldi"
-                location.reload();
+                gameOver.innerHTML = "WOW, You Might Be Smarter Than ME! - Baldi"
+                location.Reload()
             }
         }
 
