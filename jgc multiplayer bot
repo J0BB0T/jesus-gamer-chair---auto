@@ -31,7 +31,7 @@
 
     var running = false;
     setInterval(() => {
-        var equation = document.getElementsByClassName("notranslate h-full noselect current")[0];
+        var equation = document.getElementsByClassName("notranslate height-100 noselect current")[0];
         var input = document.getElementsByClassName("input-holder width-100")[0];
         if (input == undefined || input == null) {
             input = document.getElementsByClassName("input-holder width-100 hint")[0];
@@ -54,18 +54,20 @@
             for (var i = 0; i < top.children.length; i++) {
                 top.children[i].remove()
             }
-
-           el.style = "background-color: black; width: auto; align-items: center; margin-top: 10px; margin-bottom: 10px; padding: 5px; border: 2px 74,41,132; font-size: 20px; font-weight: bold; font-family: monospace; background-image: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red); -webkit-background-clip: text; color: transparent; text-fill-color: transparent;";
-           el.innerHTML = "💰 JESUS GAMER CHAIR ACTIVE 💰";
+            el.style = "background-color: black; width: auto; align-items: center; margin-top: 10px; margin-bottom: 10px; padding: 5px; border: 2px 74,41,132; font-size: 20px; font-weight: bold; font-family: monospace; background-image: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red); -webkit-background-clip: text; color: transparent; text-fill-color: transparent;";
+            el.innerHTML = "💰 JESUS GAMER CHAIR ACTIVE 💰";
             top.appendChild(el);
 
             var id = setInterval(() => {
                 if (running) {
                     let raw = equation.innerHTML.replace("×", "*").replace("÷", "/");
+                    console.log(raw);
                     while (raw.includes("<!---->")) {
                         raw = raw.replace("<!---->", "");
                     }
+                    raw = raw.replace(/<\s*span[^>]*>.*?<\s*\/\s*span\s*>/g, ''); // i'm fairly sure this is the ttrockstar's developers trying to combat the exploit
                     raw = raw.trim();
+                    console.log(raw);
                     let answer = String(eval(raw));
                     GM_log("answer: " + answer);
 
@@ -90,16 +92,12 @@
                 } else {
                     clearInterval(id);
                 }
-            }, 224);
+            }, 225);
         } else {
             running = false;
-            play = document.getElementsByClassName("mat-focus-indicator margin-5 play-button stamp mat-raised-button mat-button-base mat-accent ng-star-inserted")[0];
-            if (play != undefined) {
-                play.click();
-            }
             var gameOver = document.getElementsByClassName("stamp center mat-white-color")[0];
             if (gameOver != undefined) {
-                gameOver.innerHTML = "WOW, YOU MIGHT BE SMARTER THAN ME! - Baldi"
+                gameOver.innerHTML = "WOW, You Might Be Smarter Than ME! - Baldi"
             }
         }
 
